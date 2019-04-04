@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>spl_background</key>
+        <value>#FF67D1D7</value>
+    </entry>
+
+    <entry>
+        <key>spl_message_caps</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>spl_message</key>
+        <value>Welcome to my awesome app!</value>
+    </entry>
+</defaultsMap>
+    <!-- END xml_defaults -->

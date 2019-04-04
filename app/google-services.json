@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "815227272873",
+    "firebase_url": "https://mytalk-84176.firebaseio.com",
+    "project_id": "mytalk-84176",
+    "storage_bucket": "mytalk-84176.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815227272873:android:cf2265eeb7f1014d",
+        "android_client_info": {
+          "package_name": "com.woojinsik.mytalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815227272873-1g0t7qgn1bjg88qs5b7ffqr7gvo1r8ds.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.woojinsik.mytalk",
+            "certificate_hash": "f0872ee63af6492759b8539558fc21b65ad12fee"
+          }
+        },
+        {
+          "client_id": "815227272873-1nd75rliaepap7f6hd40koph6sijcpd2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ5IFFvhKlcuwzqoAD9QX-rVAirO_IYY0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815227272873-1nd75rliaepap7f6hd40koph6sijcpd2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

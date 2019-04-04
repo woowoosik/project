@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".SignupActivity">
+
+<!-- android:src="@drawable/ic_add_to_photos_black_24dp"-->
+    <ImageView
+        android:src="@drawable/default_image"
+        android:id="@+id/accountFragment_imageview_profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"/>
+
+
+    <TextView
+        android:id="@+id/accountFragment_TextView_name"
+        android:text="이름"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:id="@+id/accountFragment_TextView_comment"
+        android:text="상태 메시지"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:gravity="center"
+
+
+        />
+
+
+    <Button
+        android:text="상태 메세지"
+        android:id="@+id/accountFragment_button_comment"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="40dp"
+        />
+
+    <Button
+        android:text="로그아웃"
+        android:id="@+id/acountFragment_button_signout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_signout"
+        android:layout_marginBottom="3dp"
+        />
+
+
+
+
+
+</LinearLayout>

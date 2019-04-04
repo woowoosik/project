@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Talk</string>
+    <string name="rc_color">spl_background</string>
+    <string name="title_activity_message">MessageActivity</string>
+</resources>
