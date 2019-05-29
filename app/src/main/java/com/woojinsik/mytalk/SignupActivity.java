@@ -26,6 +26,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 import com.woojinsik.mytalk.model.UserModel;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SignupActivity extends AppCompatActivity {
 
     private static final int PICK_FROM_ALBUM = 1;
@@ -74,59 +77,64 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(email.getText());
+                boolean isNormal = m.matches();
+
                 // 값이 없는경우
                 if(email.getText().length() == 0 || name.getText().length() == 0 || password.getText().length() == 0){
                     Toast.makeText(SignupActivity.this, "정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
                 }else if(imageUri == null) {
                     // 이미지를 추가하지 않았을 경우 기본 이미지로
                     imageUri = Uri.parse("android.resource://" + getPackageName() +"/" + R.drawable.default_image);
+                }else if(!isNormal){
+                    // 이메일 형식이 다를경우
+                    Toast.makeText(SignupActivity.this, "이메일을 XX@xx.xxx 형식으로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }else if(password.getText().length() <= 5) {
+                    // 패스워드가 5자리 이하일 경우
+                    Toast.makeText(SignupActivity.this, "패스워드를 6자리 이상으로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    Toast.makeText(SignupActivity.this, "잠시만 기다려주세요.", Toast.LENGTH_SHORT).show();
+                    // 이메일 주소와 비밀번호를 createUserWithEmailAndPassword에 전달하여 신규 계정을 생성
+                    FirebaseAuth.getInstance()
+                            .createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                            // 작업이 완료될 때 호출된다.
+                            .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                    final String uid = task.getResult().getUser().getUid();
+
+                                    FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(imageUri)
+                                            .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                                    @SuppressWarnings("VisibleForTests")
+
+                                                    String imageUrl = task.getResult().getDownloadUrl().toString();
+
+                                                    UserModel userModel = new UserModel();
+                                                    userModel.userName = name.getText().toString();
+                                                    userModel.profileImageUrl = imageUrl;
+                                                    userModel.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+                                                    // 데이터베이스에 넣고, 성공하면 닫기
+                                                    FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel)
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override   // 회원가입 완료시 종료
+                                                                public void onSuccess(Void aVoid) {
+                                                                    SignupActivity.this.finish();
+                                                                }
+                                                            });
+
+                                                }
+                                            });
+                                }
+                            });
                 }
-
-                // 이메일 주소와 비밀번호를 createUserWithEmailAndPassword에 전달하여 신규 계정을 생성
-                FirebaseAuth.getInstance()
-                        .createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
-                         // 작업이 완료될 때 호출된다.
-                        .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                final String uid = task.getResult().getUser().getUid();
-
-                                FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(imageUri)
-                                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                        @SuppressWarnings("VisibleForTests")
-
-                                        String imageUrl = task.getResult().getDownloadUrl().toString();
-
-
-
-
-                                        //System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwww"+imageUrl);
-                                        UserModel userModel = new UserModel();
-                                        userModel.userName = name.getText().toString();
-                                        userModel.profileImageUrl = imageUrl;
-                                        userModel.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-                                        // 데이터베이스에 넣고, 성공하면 닫기
-                                        FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override   // 회원가입 완료시 종료
-                                            public void onSuccess(Void aVoid) {
-                                                SignupActivity.this.finish();
-                                            }
-                                        });
-
-
-                                        System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwww"+ FirebaseDatabase.getInstance().getReference().child("users").child(uid));
-
-                                    }
-                                });
-                            }
-                        });
             }
         });
     }
