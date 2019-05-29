@@ -59,7 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginEvent();
+                if(id.getText().length() == 0 || password.getText().length() == 0 ){
+                    Toast.makeText(LoginActivity.this, "정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }else { loginEvent(); }
             }
         });
 
