@@ -42,17 +42,26 @@ import java.util.TreeMap;
 public class ChatFragment extends Fragment {
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm"); // 알아볼 수 있게 바꾼다.
-
+    private RecyclerView recyclerView;
+    private View view;
+    
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chat,container,false);
+        view = inflater.inflate(R.layout.fragment_chat,container,false);
 
-        RecyclerView recyclerView  = (RecyclerView) view.findViewById(R.id.chatfragment_recyclerview);
+        recyclerView  = (RecyclerView) view.findViewById(R.id.chatfragment_recyclerview);
         recyclerView.setAdapter(new ChatRecyclerViewAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerView.setAdapter(new ChatRecyclerViewAdapter());
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 
 
