@@ -53,7 +53,7 @@ public class SelectFriendActivity extends AppCompatActivity {
                 chatModel.users.put(myUid,true); // 자신도 단체 채팅방에 넣어준다.
 
                 FirebaseDatabase.getInstance().getReference().child("chatrooms").push().setValue(chatModel);
-
+                SelectFriendActivity.this.finish();
             }
         });
 
